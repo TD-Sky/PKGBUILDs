@@ -1,0 +1,15 @@
+pkgbase = iwant
+	pkgdesc = Install applications what I WANT.
+	pkgver = 0.1.1
+	pkgrel = 1
+	url = https://github.com/TD-Sky/iwant
+	arch = x86_64
+	license = MIT
+	makedepends = cargo
+	optdepends = paru: AUR support
+	optdepends = flatpak: flathub support
+	optdepends = npm: npm support
+	source = iwant-0.1.1.tar.gz::https://github.com/TD-Sky/iwant/archive/v0.1.1.tar.gz
+	sha256sums = 6a26592e076f88a1d085dc8af7d5e1341eb2326ea94f7f236048f3b79035885b
+
+pkgname = iwant
