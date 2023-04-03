@@ -1,32 +1,36 @@
 #!/usr/bin/nu
 
+# Check the new version of package and update it.
+#
+# If there are `<package>` `<package>-bin` `<package>-git`
+# and you are going to update them one by one,
+# you will need to downgrade the package in `old_ver.json`
+# manually after updating.
 def main [
     package: path,        # Package going to update
     --release (-r): bool, # Increase `pkgrel` if `pkgver` is unchanged
-    --check (-c): bool,   # Check new version before update
 ] {
-    if $check {
-        # Check the new verions according to `nvchecker.toml`;
-        # if upstream has upgraded, update `new_ver.json`;
-        # compare `old_ver.json` and `new_ver.json`, print the differences.
-        nvchecker -c nvchecker.toml -l warning --failures
-        nvcmp -c nvchecker.toml
-    }
+    # The actually name for version check
+    let project = (
+        $package
+        | path basename
+        | str replace '([[:ascii:]]+)-(bin|git)$' '$1'
+        # Strip the suffix if there is
+    )
+
+    # Check the new verions according to `nvchecker.toml`;
+    # if upstream has upgraded, update `new_ver.json`;
+    # compare `old_ver.json` and `new_ver.json`, print the differences.
+    nvchecker -c nvchecker.toml -l warning --failures -e $project
+    nvcmp -c nvchecker.toml
 
     let old_ver = (open old_ver.json)
     let new_ver = (open new_ver.json)
 
     cd $package
 
-    # Rebind variables with `string`
-    let package = (
-        $package
-        | path basename
-        | str replace '([[:ascii:]]+)-(bin|git)$' '$1'
-        # Strip the suffix if there is
-    )
-    let old_ver = ($old_ver | get $package)
-    let new_ver = ($new_ver | get $package)
+    let old_ver = ($old_ver | get $project)
+    let new_ver = ($new_ver | get $project)
 
     if $old_ver != $new_ver {
         open -r PKGBUILD
@@ -49,6 +53,6 @@ def main [
     # Back to PKGBUILDs
     cd ..
 
-    # Update `package` in `old_ver.json` to new version
-    nvtake $package -c nvchecker.toml
+    # Update `project` in `old_ver.json` to new version.
+    nvtake $project -c nvchecker.toml
 }
