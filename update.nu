@@ -1,14 +1,10 @@
 #!/usr/bin/nu
 
 # Check the new version of package and update it.
-#
-# If there are `<package>` `<package>-bin` `<package>-git`
-# and you are going to update them one by one,
-# you will need to downgrade the package in `old_ver.json`
-# manually after updating.
 def main [
-    package: path,        # Package going to update
-    --release (-r): bool, # Increase `pkgrel` if `pkgver` is unchanged
+    package: path,          # Package going to update
+    --release (-r): bool,   # Increase `pkgrel` if `pkgver` is unchanged
+    --keep-old: bool,       # Keep old version
 ] {
     # The actually name for version check
     let project = (
@@ -53,6 +49,10 @@ def main [
     # Back to PKGBUILDs
     cd ..
 
-    # Update `project` in `old_ver.json` to new version.
-    nvtake $project -c nvchecker.toml
+    # Keeping old version allows you to update another
+    # package of the same project next time
+    if not $keep_old {
+        # Update `project` in `old_ver.json` to new version
+        nvtake $project -c nvchecker.toml
+    }
 }
