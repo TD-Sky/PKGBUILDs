@@ -10,7 +10,7 @@ def main [
     let project = (
         $package
         | path basename
-        | str replace '([[:ascii:]]+)-(bin|git)$' '$1'
+        | str replace -r '([[:ascii:]]+)-(bin|git)$' '$1'
         # Strip the suffix if there is
     )
 
@@ -30,8 +30,8 @@ def main [
 
     if $old_ver != $new_ver {
         open -r PKGBUILD
-        | str replace $"pkgver=($old_ver)" $"pkgver=($new_ver)"
-        | str replace 'pkgrel=(\d+)' 'pkgrel=1' # Clean `pkgrel` to 1
+        | str replace -r $"pkgver=($old_ver)" $"pkgver=($new_ver)"
+        | str replace -r 'pkgrel=(\d+)' 'pkgrel=1' # Clean `pkgrel` to 1
         | save -f PKGBUILD
     } else if $old_ver == $new_ver and $release {
         # Increase `pkgrel` by 1
