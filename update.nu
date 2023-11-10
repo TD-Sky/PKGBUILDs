@@ -3,8 +3,8 @@
 # Check the new version of package and update it.
 def main [
     package: path,          # Package going to update
-    --release (-r): bool,   # Increase `pkgrel` if `pkgver` is unchanged
-    --keep-old: bool,       # Keep old version
+    --release (-r),   # Increase `pkgrel` if `pkgver` is unchanged
+    --keep-old,       # Keep old version
 ] {
     # The actually name for version check
     let project = (
