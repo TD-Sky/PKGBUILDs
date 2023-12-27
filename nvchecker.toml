@@ -19,3 +19,9 @@ source = "github"
 github = "TD-Sky/dagtoc"
 use_latest_release = true
 prefix = "v"
+
+[satty]
+source = "github"
+github = "gabm/Satty"
+use_latest_release = true
+prefix = "v"
