@@ -23,7 +23,7 @@ def main [package: path] {
     git clone $"ssh://aur@aur.archlinux.org/($package | path basename).git"
 
     let remote_package = ($package | path dirname -r $PUBLISH_HOME)
-    ^cp ($package | path join PKGBUILD) ($package | path join .SRCINFO) -t $remote_package
+    cp ($package | path join PKGBUILD) ($package | path join .SRCINFO) $remote_package
 
     cd $remote_package
     log pwd
