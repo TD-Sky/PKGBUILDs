@@ -1,6 +1,19 @@
 {
-  "conceal": "0.5.2",
-  "dagtoc": "4.0.1",
-  "iwant": "0.4.0",
-  "satty": "0.12.0"
+  "version": 2,
+  "data": {
+    "conceal": {
+      "version": "0.5.2"
+    },
+    "dagtoc": {
+      "version": "4.0.1"
+    },
+    "iwant": {
+      "version": "0.5.0",
+      "gitref": "refs/tags/v0.5.0",
+      "url": "https://github.com/TD-Sky/iwant/releases/tag/v0.5.0"
+    },
+    "satty": {
+      "version": "0.12.0"
+    }
+  }
 }
