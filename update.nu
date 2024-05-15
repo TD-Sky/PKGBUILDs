@@ -1,5 +1,7 @@
 #!/usr/bin/nu
 
+plugin use query
+
 # Check the new version of package and update it.
 def main [
     package: path,          # Package going to update
@@ -20,13 +22,10 @@ def main [
     nvchecker -c nvchecker.toml -l warning --failures -e $project
     nvcmp -c nvchecker.toml
 
-    let old_ver = (open old_ver.json)
-    let new_ver = (open new_ver.json)
+    let old_ver = (open -r old_ver.json | query json $"data.($project).version")
+    let new_ver = (open -r new_ver.json | query json $"data.($project).version")
 
     cd $package
-
-    let old_ver = ($old_ver | get $project)
-    let new_ver = ($new_ver | get $project)
 
     if $old_ver != $new_ver {
         open -r PKGBUILD

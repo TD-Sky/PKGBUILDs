@@ -14,7 +14,7 @@
 
 
 
-## Usage
+## Setup
 
 First of all, you need to initialize the repository to equip with githooks helping you manage packages:
 
@@ -22,11 +22,21 @@ First of all, you need to initialize the repository to equip with githooks helpi
 $ aurpublish setup
 ```
 
+Then install nushell plugin [nu_plugin_query](https://crates.io/crates/nu_plugin_query) using nushell:
+
+```nushell
+$ plugin add <path/to/nu_plugin_query>
+```
+
+
+
+## Usage
+
 When you make sure the upstream has upgraded, use `update.nu` to update the specified package:
 
 ```bash
-# Check(-c) and update
-$ ./update.nu <package-in-the-repository> -c
+# Check and update
+$ ./update.nu <package-in-the-repository>
 ```
 
 > You can read the help of `update.nu`:
