@@ -1,4 +1,4 @@
-#!/usr/bin/nu
+#!/usr/bin/env nu
 
 use std log
 
