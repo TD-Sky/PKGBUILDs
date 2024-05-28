@@ -4,9 +4,9 @@ plugin use query
 
 # Check the new version of package and update it.
 def main [
-    package: path,          # Package going to update
-    --release (-r),   # Increase `pkgrel` if `pkgver` is unchanged
-    --keep-old,       # Keep old version
+    package: path,  # Package going to update
+    --release (-r), # Increase `pkgrel` if `pkgver` is unchanged
+    --keep (-k),    # Keep old version
 ] {
     # The actually name for version check
     let project = (
@@ -50,7 +50,7 @@ def main [
 
     # Keeping old version allows you to update another
     # package of the same project next time
-    if not $keep_old {
+    if not $keep {
         # Update `project` in `old_ver.json` to new version
         nvtake $project -c nvchecker.toml
     }
