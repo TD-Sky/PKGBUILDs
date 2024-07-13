@@ -5,9 +5,9 @@
       "version": "0.5.2"
     },
     "dagtoc": {
-      "version": "4.0.1",
-      "gitref": "refs/tags/v4.0.1",
-      "url": "https://github.com/TD-Sky/dagtoc/releases/tag/v4.0.1"
+      "version": "5.0.0",
+      "gitref": "refs/tags/v5.0.0",
+      "url": "https://github.com/TD-Sky/dagtoc/releases/tag/v5.0.0"
     },
     "iwant": {
       "version": "0.6.1",
