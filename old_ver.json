@@ -2,7 +2,9 @@
   "version": 2,
   "data": {
     "conceal": {
-      "version": "0.5.2"
+      "version": "0.5.3",
+      "gitref": "refs/tags/v0.5.3",
+      "url": "https://github.com/TD-Sky/conceal/releases/tag/v0.5.3"
     },
     "dagtoc": {
       "version": "5.0.0",
