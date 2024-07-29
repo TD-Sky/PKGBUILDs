@@ -17,9 +17,9 @@
       "url": "https://github.com/TD-Sky/iwant/releases/tag/v0.6.1"
     },
     "satty": {
-      "version": "0.13.0",
-      "gitref": "refs/tags/v0.13.0",
-      "url": "https://github.com/gabm/Satty/releases/tag/v0.13.0"
+      "version": "0.14.0",
+      "gitref": "refs/tags/v0.14.0",
+      "url": "https://github.com/gabm/Satty/releases/tag/v0.14.0"
     }
   }
 }
