@@ -11,9 +11,10 @@ def 'log pwd' [] {
 # Publish package to AUR
 def main [package: path] {
     cd $package
+    let pkgbuild = open -r PKGBUILD
 
-    let pkgver = (rg 'pkgver=(.+)$' -r '$1' -m 1 PKGBUILD)
-    let pkgrel = rg 'pkgrel=(\d+)' -r '$1' -m 1 PKGBUILD | into int
+    let pkgver = $pkgbuild | parse -r 'pkgver=(?P<ver>.+)' | get ver.0
+    let pkgrel = $pkgbuild | parse -r 'pkgrel=(?P<rel>\d+)' | get rel.0 | into int
     let version = $"($pkgver)-($pkgrel)"
     log info ('Version: ' + $version)
 

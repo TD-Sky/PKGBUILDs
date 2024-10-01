@@ -9,12 +9,10 @@ def main [
     --keep (-k),    # Keep old version
 ] {
     # The actually name for version check
-    let project = (
-        $package
+    let project = $package
         | path basename
-        | str replace -r '([[:ascii:]]+)-(bin|git)$' '$1'
-        # Strip the suffix if there is
-    )
+        | parse -r '(?P<name>[[:ascii:]]+)-(bin|git)'
+        | get name.0
 
     # Check the new verions according to `nvchecker.toml`;
     # if upstream has upgraded, update `new_ver.json`;
@@ -22,20 +20,23 @@ def main [
     nvchecker -c nvchecker.toml -l warning --failures -e $project
     nvcmp -c nvchecker.toml
 
-    let old_ver = (open -r old_ver.json | query json $"data.($project).version")
-    let new_ver = (open -r new_ver.json | query json $"data.($project).version")
+    let old_ver = open -r old_ver.json | query json $"data.($project).version"
+    let new_ver = open -r new_ver.json | query json $"data.($project).version"
 
     cd $package
+    let pkgbuild = open -r PKGBUILD
 
     if $old_ver != $new_ver {
-        open -r PKGBUILD
+        $pkgbuild
         | str replace -r $"pkgver=($old_ver)" $"pkgver=($new_ver)"
-        | str replace -r 'pkgrel=(\d+)' 'pkgrel=1' # Clean `pkgrel` to 1
+        | str replace -r 'pkgrel=\d+' 'pkgrel=1' # Clean `pkgrel` to 1
         | save -f PKGBUILD
     } else if $old_ver == $new_ver and $release {
         # Increase `pkgrel` by 1
-        let pkgrel = (rg 'pkgrel=(\d+)' -r '$1' -m 1 PKGBUILD | into int)
-        sd 'pkgrel=(\d+)' $"pkgrel=($pkgrel + 1)" PKGBUILD
+        let pkgrel = $pkgbuild | parse -r 'pkgrel=(?P<rel>\d+)' | get rel.0 | into int
+        $pkgbuild
+        | str replace -r 'pkgrel=\d+' $"pkgrel=($pkgrel + 1)"
+        | save -f PKGBUILD
     } else {
         return
     }
