@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-use std log
+use std/log
 
 const PUBLISH_HOME = '/tmp/aur/publish'
 
