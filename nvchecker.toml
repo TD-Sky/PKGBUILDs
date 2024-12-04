@@ -8,12 +8,6 @@ github = "TD-Sky/conceal"
 use_latest_release = true
 prefix = "v"
 
-[iwant]
-source = "github"
-github = "TD-Sky/iwant"
-use_latest_release = true
-prefix = "v"
-
 [dagtoc]
 source = "github"
 github = "TD-Sky/dagtoc"
