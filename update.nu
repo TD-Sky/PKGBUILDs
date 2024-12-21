@@ -11,8 +11,8 @@ def main [
     # The actually name for version check
     let project = $package
         | path basename
-        | parse -r '(?P<name>[[:ascii:]]+)-(bin|git)'
-        | get name.0
+        | split row '-'
+        | first
 
     # Check the new verions according to `nvchecker.toml`;
     # if upstream has upgraded, update `new_ver.json`;
