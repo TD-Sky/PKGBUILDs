@@ -9,10 +9,11 @@ def main [
     --keep (-k),    # Keep old version
 ] {
     # The actually name for version check
-    let project = $package
-        | path basename
-        | split row '-'
-        | first
+    let dir = $package | path basename
+    let project = $dir
+        | str strip-suffix '-bin'
+        | default ($dir | str strip-suffix '-git')
+        | default $dir
 
     # Check the new verions according to `nvchecker.toml`;
     # if upstream has upgraded, update `new_ver.json`;
@@ -54,5 +55,15 @@ def main [
     if not $keep {
         # Update `project` in `old_ver.json` to new version
         nvtake $project -c nvchecker.toml
+    }
+}
+
+def 'str strip-suffix' [
+    suffix: string
+]: string -> string {
+    let self = $in
+    if ($self | str ends-with $suffix) {
+        let i = $self | str index-of -e $suffix
+        $self | str substring ..<$i
     }
 }
