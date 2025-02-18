@@ -1,0 +1,21 @@
+pkgname=HillstoneSecureConnect
+pkgver=v5.5.0.11593
+pkgrel=1
+pkgdesc="HillstoneSecureConnect 是一款建立远程连接的软件, 支持移动设备、Windows、Mac、Linux等设备。"
+arch=('x86_64')
+url="https://www.hillstonenet.com.cn/"
+provides=("$pkgname")
+source=("HillstoneSecureConnect.tar.gz")
+sha256sums=('7fa172a94dcd2d7daa26fe41b4ccb1d0a825ca9a3980e9b308f75df28394f12e')
+options=(!strip !lto !debug)
+
+package() {
+    mkdir -p "$pkgdir/opt"
+    cp -r HillstoneSecureConnect -t "$pkgdir/opt"
+
+    mkdir -p "$pkgdir/usr/share/applications"
+    ln -s "/opt/HillstoneSecureConnect/HillstoneSecureConnect.desktop" -t "$pkgdir/usr/share/applications"
+
+    mkdir -p "$pkgdir/etc/systemd/system"
+    ln -s "/opt/HillstoneSecureConnect/services/HillstoneSecureConnect.service" -t "$pkgdir/etc/systemd/system"
+}

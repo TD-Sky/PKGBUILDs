@@ -1,0 +1,14 @@
+pkgbase = HillstoneSecureConnect
+	pkgdesc = HillstoneSecureConnect 是一款建立远程连接的软件, 支持移动设备、Windows、Mac、Linux等设备。
+	pkgver = v5.5.0.11593
+	pkgrel = 1
+	url = https://www.hillstonenet.com.cn/
+	arch = x86_64
+	provides = HillstoneSecureConnect
+	options = !strip
+	options = !lto
+	options = !debug
+	source = HillstoneSecureConnect.tar.gz
+	sha256sums = 7fa172a94dcd2d7daa26fe41b4ccb1d0a825ca9a3980e9b308f75df28394f12e
+
+pkgname = HillstoneSecureConnect
