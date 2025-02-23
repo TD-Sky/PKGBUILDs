@@ -24,7 +24,7 @@ def main [package: path] {
     let pdir = $package | path basename
     if ($pdir | path exists) {
         log warning $"There was already `($pdir)`, removing it..."
-        rm $pdir
+        rm -rf $pdir
     }
     git clone $"ssh://aur@aur.archlinux.org/($pdir).git"
 
