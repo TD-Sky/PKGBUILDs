@@ -1,0 +1,17 @@
+pkgbase = android-x86-64-openssl-bin
+	pkgdesc = The Open Source toolkit for Secure Sockets Layer and Transport Layer Security (Android, x86-64)
+	pkgver = 3.4.1
+	pkgrel = 1
+	url = https://www.openssl.org
+	arch = any
+	license = Apache-2.0
+	conflicts = android-openssl-x86_64
+	replaces = android-openssl-x86_64
+	options = !strip
+	options = !buildflags
+	options = staticlibs
+	options = !emptydirs
+	source = android-x86-64-openssl.tar.gz
+	sha256sums = 69f9df5942092eb613f20f4cc06c6901b7505e25f956722bd1c00e3bc5ef2c4a
+
+pkgname = android-x86-64-openssl-bin

@@ -1,0 +1,28 @@
+# Maintainer: Collide <three-dim-sky@foxmail.com>
+# https://github.com/TD-Sky/PKGBUILDs
+
+_pkg_arch=x86-64
+_android_arch=x86_64
+_android_platform_arch=arch-x86_64
+_pkgname=openssl
+_pkgver=3.4.1
+
+pkgname="android-${_pkg_arch}-${_pkgname}-bin"
+# use a pacman compatible version scheme
+pkgver=${_pkgver/[a-z]/.${_pkgver//[0-9.]/}}
+pkgrel=1
+pkgdesc="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security (Android, $_pkg_arch)"
+arch=('any')
+url='https://www.openssl.org'
+license=('Apache-2.0')
+options=('!strip' '!buildflags' 'staticlibs' '!emptydirs')
+conflicts=("android-$_pkgname-$_android_arch")
+replaces=("android-$_pkgname-$_android_arch")
+source=("android-x86-64-openssl.tar.gz")
+sha256sums=('69f9df5942092eb613f20f4cc06c6901b7505e25f956722bd1c00e3bc5ef2c4a')
+
+package() {
+  cd ${pkgname%-bin}
+  cp -r opt -t $pkgdir
+  cp -r usr -t $pkgdir
+}
