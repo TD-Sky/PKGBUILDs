@@ -5,11 +5,9 @@ newver = "new_ver.json"
 [conceal]
 source = "github"
 github = "TD-Sky/conceal"
-use_latest_release = true
 prefix = "v"
 
 [dagtoc]
 source = "github"
 github = "TD-Sky/dagtoc"
-use_latest_release = true
 prefix = "v"

@@ -15,11 +15,11 @@ def main [
         | default ($dir | str strip-suffix '-git')
         | default $dir
 
-    # Check the new verions according to `nvchecker.toml`;
+    # Check the new verions according to `nvrs.toml`;
     # if upstream has upgraded, update `new_ver.json`;
     # compare `old_ver.json` and `new_ver.json`, print the differences.
-    nvchecker -c nvchecker.toml -l warning --failures -e $project
-    nvcmp -c nvchecker.toml
+    nvrs --config nvrs.toml
+    nvrs --config nvrs.toml --cmp
 
     let old_ver = open -r old_ver.json | query json $"data.($project).version"
     let new_ver = open -r new_ver.json | query json $"data.($project).version"
@@ -54,7 +54,7 @@ def main [
     # package of the same project next time
     if not $keep {
         # Update `project` in `old_ver.json` to new version
-        nvtake $project -c nvchecker.toml
+        nvrs --config nvrs.toml --take $project
     }
 }
 

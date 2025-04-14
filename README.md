@@ -7,7 +7,7 @@
 
 ## Powered by
 
-- [nvchecker](https://github.com/lilydjwg/nvchecker)
+- [nvrs](https://github.com/adamperkowski/nvrs)
 - [nushell](https://github.com/nushell/nushell)
 - [pacman-contrib](https://gitlab.archlinux.org/pacman/pacman-contrib): updpkgsums
 - [aurpublish](https://github.com/eli-schwartz/aurpublish)
