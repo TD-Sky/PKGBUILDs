@@ -1,0 +1,14 @@
+[Action]
+When = PostTransaction
+Exec = /usr/lib/feishu-portable/install-hook.sh
+Depends = feishu-portable
+Description = Configuring Feishu
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Path
+Target = usr/lib/feishu-portable/*
+Target = usr/bin/feishu
+Target = usr/bin/bytedance-feishu-stable
+Target = usr/share/menu/feishu.menu

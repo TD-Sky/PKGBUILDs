@@ -8,6 +8,8 @@
 *.log
 *.log.*
 *.sig
+*.deb
+*.pkg.tar.zst
 
 pkg/
 src/
