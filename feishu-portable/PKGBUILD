@@ -22,12 +22,12 @@ sha256sums=(
     'e58d67afa4ca6fb6fbfea599a7fae72c9a989d80135eb737262676e0b7045725'
     '45c34eae67933b1c5a8fcfb6dddfa866e32f3ddc4e9fddf08aa7e83acfc698b3'
     '653848a197d08b7a76981c1b60960a55833d9828cfde63f184edd645a7a9d432'
-    '2c520dee7e31aae11d7f59de514562698d97388eb58708db33666d3bb0e40b43'
+    'ec02c986e899997aeb7602932d38cd7b16d3fe963eecdd6283d0372c0a45403b'
     '55a4b50a1322c14c274c159a20f5fbb8369fc2351af9d698e38ec2df0fdf7e7e'
 )
 
 function package() {
-    install -Dm755 portable-config "${pkgdir}/usr/lib/portable/info/com.bytedance.feishu/config"
+    install -Dm755 portable-config -t "${pkgdir}/usr/lib/feishu-portable"
     install -Dm644 feishu-portable.hook -t "${pkgdir}/usr/share/libalpm/hooks"
     install -Dm644 com.bytedance.feishu.desktop -t "${pkgdir}/usr/share/applications"
     install -Dm755 feishu.sh -t "${pkgdir}/usr/lib/feishu-portable"

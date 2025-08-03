@@ -6,6 +6,6 @@ if [ ${XDG_SESSION_TYPE} = "wayland" ]; then
     export waylandOnly=${waylandOnly:-"true"}
 fi
 
-export _portableConfig="/usr/lib/portable/info/com.bytedance.feishu/config"
+export _portableConfig="/usr/lib/feishu-portable/portable-config"
 
 portable $@
