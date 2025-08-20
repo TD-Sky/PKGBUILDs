@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-export _portableConfig="/usr/lib/portable/info/com.bytedance.feishu/config"
+export _portableConfig="com.bytedance.feishu"
 
 # Double dash is important!
 exec portable -- $@
