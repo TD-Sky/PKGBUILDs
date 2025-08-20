@@ -1,14 +1,18 @@
 pkgname=feishu-portable
-pkgver=1
+pkgver=7.42.17
 pkgrel=1
 epoch=1
-pkgdesc="Optional sandbox for Feishu"
+pkgdesc="Linux client of Feishu (Lark) from Bytedance. Sandboxed by portable."
 arch=('any')
 url="https://github.com/Kraftland/portable"
 license=('GPL3')
-options=(!debug !strip)
-provides+=('feishu-bin')
-depends=('feishu-bin' 'portable')
+options=(!debug !strip '!emptydirs')
+provides+=('feishu-bin' 'feishu')
+conflicts=('feishu' 'feishu-bin')
+source_x86_64=("https://sf3-cn.feishucdn.com/obj/ee-appcenter/${_pkghash_x64}/Feishu-linux_x64-${pkgver}.deb")
+source_aarch64=("https://sf3-cn.feishucdn.com/obj/ee-appcenter/${_pkghash_arm64}/Feishu-linux_arm64-${pkgver}.deb")
+sha256sums_x86_64=('46cabec500328bb23559c9e45f384f1206d4c9f5d4f573d5288bafe99f47e550')
+sha256sums_aarch64=('53291093c47c103b079911b2f417c35e1119165613d7a6c0911b8b5c56490c7c')
 
 source=(
     portable-config
@@ -27,9 +31,32 @@ sha256sums=(
 )
 
 function package() {
-    install -Dm755 portable-config "${pkgdir}/usr/lib/portable/info/com.bytedance.feishu/config"
-    install -Dm644 feishu-portable.hook -t "${pkgdir}/usr/share/libalpm/hooks"
-    install -Dm644 com.bytedance.feishu.desktop -t "${pkgdir}/usr/share/applications"
-    install -Dm755 feishu.sh -t "${pkgdir}/usr/lib/feishu-portable"
-    install -Dm755 install-hook.sh -t "${pkgdir}/usr/lib/feishu-portable"
+	depends+=('ca-certificates' 'gtk3' 'nss' 'xdg-utils' 'dnsmasq' 'portable')
+	tar xpvf "${srcdir}/data.tar.xz" --xattrs-include='*' --numeric-owner -C "${pkgdir}"
+	rm -rf \
+		"${pkgdir}/usr/share/applications"
+	rm -rf \
+		"${pkgdir}/usr/share/menu"
+	rm -rf \
+		"${pkgdir}/usr/bin"
+	install -Dm755 \
+		portable-config \
+		"${pkgdir}/usr/lib/portable/info/com.bytedance.feishu/config"
+	install -Dm644 \
+		com.bytedance.feishu.desktop \
+		"${pkgdir}/usr/share/applications/com.bytedance.feishu.desktop"
+	install -Dm755 \
+		feishu.sh \
+		"${pkgdir}/usr/lib/feishu-portable"
+	install -Dm755 \
+		feishu.sh \
+		"${pkgdir}/usr/lib/feishu"
+	# This is from the original feishu PKGBUILD, I have no idea why it's there
+	sed -i \
+		's/bytedance-feishu/feishu/g' \
+		"${pkgdir}/usr/share/appdata/bytedance-feishu.appdata.xml"
+	sed -i \
+		's/bytedance-feishu/feishu/g' \
+		"${pkgdir}/opt/bytedance/feishu/bytedance-feishu"
+	#install -Dm755 install-hook.sh -t "${pkgdir}/usr/lib/feishu-portable"
 }
