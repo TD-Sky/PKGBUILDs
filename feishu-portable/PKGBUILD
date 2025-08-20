@@ -58,5 +58,4 @@ function package() {
 	sed -i \
 		's/bytedance-feishu/feishu/g' \
 		"${pkgdir}/opt/bytedance/feishu/bytedance-feishu"
-	#install -Dm755 install-hook.sh -t "${pkgdir}/usr/lib/feishu-portable"
 }

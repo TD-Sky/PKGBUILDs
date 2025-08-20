@@ -11,7 +11,7 @@ GenericName[zh_CN]=Feishu
 Comment=Feishu is a next-generation office suite that integrates messaging, schedule management, collaborative documents, video meeting, and various apps in one platform.
 Comment[ja]=Feishu は、メッセージ、スケジュール管理、文書の共同編集、ビデオ会議などの様々な機能を統合し、仕事を効率化する新世代のビジネスツールです。
 Comment[zh_CN]=Feishu 整合即时沟通、云文档、音视频会议、工作台等功能于一体，助力个人与企业开启未来办公新模式！
-Exec=/usr/lib/feishu-portable/feishu.sh %U
+Exec=env _portableConfig="com.bytedance.feishu" -- %U
 StartupNotify=true
 StartupWMClass=feishu
 Terminal=false
