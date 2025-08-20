@@ -1,37 +1,34 @@
 pkgname=feishu-portable
 pkgver=7.42.17
+_pkghash_x64=91e64286
+_pkghash_arm64=49127814
 pkgrel=1
 epoch=1
 pkgdesc="Linux client of Feishu (Lark) from Bytedance. Sandboxed by portable."
-arch=('any')
+arch=('x86_64' 'aarch64')
 url="https://github.com/Kraftland/portable"
-license=('GPL3')
+license=('LicenseRef-feishu')
 options=(!debug !strip '!emptydirs')
 provides+=('feishu-bin' 'feishu')
 conflicts=('feishu' 'feishu-bin')
+makedepends+=(xdg-utils)
 source_x86_64=("https://sf3-cn.feishucdn.com/obj/ee-appcenter/${_pkghash_x64}/Feishu-linux_x64-${pkgver}.deb")
 source_aarch64=("https://sf3-cn.feishucdn.com/obj/ee-appcenter/${_pkghash_arm64}/Feishu-linux_arm64-${pkgver}.deb")
-sha256sums_x86_64=('46cabec500328bb23559c9e45f384f1206d4c9f5d4f573d5288bafe99f47e550')
-sha256sums_aarch64=('53291093c47c103b079911b2f417c35e1119165613d7a6c0911b8b5c56490c7c')
+sha256sums_x86_64=('SKIP')
+sha256sums_aarch64=('SKIP')
+sha256sums=('SKIP'
+            'SKIP'
+            'SKIP')
 
 source=(
-    portable-config
-    feishu-portable.hook
-    com.bytedance.feishu.desktop
-    feishu.sh
-    install-hook.sh
+	portable-config
+	com.bytedance.feishu.desktop
+	feishu.sh
 )
 
-sha256sums=(
-    'e58d67afa4ca6fb6fbfea599a7fae72c9a989d80135eb737262676e0b7045725'
-    '45c34eae67933b1c5a8fcfb6dddfa866e32f3ddc4e9fddf08aa7e83acfc698b3'
-    '653848a197d08b7a76981c1b60960a55833d9828cfde63f184edd645a7a9d432'
-    '2c520dee7e31aae11d7f59de514562698d97388eb58708db33666d3bb0e40b43'
-    '55a4b50a1322c14c274c159a20f5fbb8369fc2351af9d698e38ec2df0fdf7e7e'
-)
 
 function package() {
-	depends+=('ca-certificates' 'gtk3' 'nss' 'xdg-utils' 'dnsmasq' 'portable')
+	depends+=('ca-certificates' 'gtk3' 'nss' 'xdg-utils' 'dnsmasq' 'portable' 'nspr' 'libmfx' 'libxkbcommon' 'libxext' 'libcups' 'mesa' 'libdrm' 'zlib' 'libxtst' 'libxfixes' 'at-spi2-core' 'libx11' 'pixman' 'expat' 'libpulse' 'libxcb' 'gnutls' libxdamage dbus glib2 glibc alsa-lib libgcrypt libxrandr gdk-pixbuf2 libxcomposite gcc-libs pango cairo bash libglvnd)
 	tar xpvf "${srcdir}/data.tar.xz" --xattrs-include='*' --numeric-owner -C "${pkgdir}"
 	rm -rf \
 		"${pkgdir}/usr/share/applications"
@@ -58,4 +55,39 @@ function package() {
 	sed -i \
 		's/bytedance-feishu/feishu/g' \
 		"${pkgdir}/opt/bytedance/feishu/bytedance-feishu"
+
+	#mv "${pkgdir}"/usr/share/appdata/{bytedance-,}feishu.appdata.xml
+	#mv "${pkgdir}"/usr/share/man/man1/{bytedance-feishu-${_pkgtyp},feishu}.1.gz
+	#mv "${pkgdir}"/usr/share/doc/{bytedance-feishu-${_pkgtyp},feishu}
+
+	# Also from original PKGBUILD
+	find "${pkgdir}" -type d | xargs chmod 755
+	mkdir -p "${pkgdir}/usr/share/icons"
+	# From original .install
+	export HOME="${srcdir}/icon-gen"
+	rm -rf "${srcdir}/icon-gen"
+	mkdir "${srcdir}/icon-gen"
+	for icon in product_logo_48.png product_logo_24.png product_logo_256.png product_logo_16.png product_logo_64.png product_logo_128.png product_logo_32.png; do
+		size="$(echo ${icon} | sed 's/[^0-9]//g')"
+		xdg-icon-resource \
+			install \
+			--size "${size}" \
+			--mode "user" \
+			"${pkgdir}/opt/bytedance/feishu/${icon}" \
+			"bytedance-feishu"
+	done
+	mkdir -p "${pkgdir}/usr/share/icons"
+	cp -r \
+		"$(find ${srcdir}/icon-gen -type d -name 'hicolor' | head -n 1)"/* \
+		"${pkgdir}/usr/share/icons"
+	chmod 755 -R "${pkgdir}/usr/share/icons"
+	NSS_FILES="libnspr4.so.0 libplds4.so.0 libplc4.so.0 libssl3.so.1 \
+		libnss3.so.1 libsmime3.so.1 libnssutil3.so.1"
+	for f in $NSS_FILES; do
+		ln -sf \
+			"/usr/lib/${f%.*}" \
+			"${pkgdir}/opt/bytedance/feishu/${f}"
+	done
+	install -d "${pkgdir}/usr/share/licenses/feishu-portable"
+	echo 'https://www.feishu.cn/terms' >"${pkgdir}/usr/share/licenses/feishu-portable/terms.url"
 }
