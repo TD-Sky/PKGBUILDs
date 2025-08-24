@@ -28,7 +28,7 @@ source=(
 
 
 function package() {
-	depends+=('ca-certificates' 'gtk3' 'nss' 'xdg-utils' 'dnsmasq' 'portable' 'nspr' 'libmfx' 'libxkbcommon' 'libxext' 'libcups' 'mesa' 'libdrm' 'zlib' 'libxtst' 'libxfixes' 'at-spi2-core' 'libx11' 'pixman' 'expat' 'libpulse' 'libxcb' 'gnutls' libxdamage dbus glib2 glibc alsa-lib libgcrypt libxrandr gdk-pixbuf2 libxcomposite gcc-libs pango cairo bash libglvnd)
+	depends+=('ca-certificates' 'gtk3' 'nss' 'xdg-utils' 'dnsmasq' 'portable' 'nspr' 'libmfx' 'libxkbcommon' 'libxext' 'libcups' 'mesa' 'libdrm' 'zlib' 'libxtst' 'libxfixes' 'at-spi2-core' 'libx11' 'pixman' 'expat' 'libpulse' 'libxcb' 'gnutls' libxdamage dbus glib2 glibc alsa-lib libgcrypt libxrandr gdk-pixbuf2 libxcomposite gcc-libs pango cairo bash libglvnd xwaylandvideobridge)
 	tar xpvf "${srcdir}/data.tar.xz" --xattrs-include='*' --numeric-owner -C "${pkgdir}"
 	rm -rf \
 		"${pkgdir}/usr/share/applications"
