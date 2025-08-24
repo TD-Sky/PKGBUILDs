@@ -76,7 +76,7 @@ function package() {
 			"${pkgdir}/opt/bytedance/feishu/${icon}" \
 			"bytedance-feishu"
 	done
-	mkdir -p "${pkgdir}/usr/share/icons"
+	mkdir -p "${pkgdir}/usr/share/icons/hicolor"
 	cp -r \
 		"$(find ${srcdir}/icon-gen -type d -name 'hicolor' | head -n 1)"/* \
 		"${pkgdir}/usr/share/icons/hicolor"
