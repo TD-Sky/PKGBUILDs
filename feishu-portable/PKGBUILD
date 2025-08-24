@@ -44,10 +44,10 @@ function package() {
 		"${pkgdir}/usr/share/applications/com.bytedance.feishu.desktop"
 	install -Dm755 \
 		feishu.sh \
-		"${pkgdir}/usr/lib/feishu-portable"
+		"${pkgdir}/usr/bin/feishu-portable"
 	install -Dm755 \
 		feishu.sh \
-		"${pkgdir}/usr/lib/feishu"
+		"${pkgdir}/usr/bin/feishu"
 	# This is from the original feishu PKGBUILD, I have no idea why it's there
 	sed -i \
 		's/bytedance-feishu/feishu/g' \
@@ -79,7 +79,7 @@ function package() {
 	mkdir -p "${pkgdir}/usr/share/icons"
 	cp -r \
 		"$(find ${srcdir}/icon-gen -type d -name 'hicolor' | head -n 1)"/* \
-		"${pkgdir}/usr/share/icons"
+		"${pkgdir}/usr/share/icons/hicolor"
 	chmod 755 -R "${pkgdir}/usr/share/icons"
 	NSS_FILES="libnspr4.so.0 libplds4.so.0 libplc4.so.0 libssl3.so.1 \
 		libnss3.so.1 libsmime3.so.1 libnssutil3.so.1"
