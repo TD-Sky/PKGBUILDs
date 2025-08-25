@@ -65,6 +65,7 @@ function package() {
 	mkdir -p "${pkgdir}/usr/share/icons"
 	# From original .install
 	export HOME="${srcdir}/icon-gen"
+	export XDG_DATA_HOME="${srcdir}/icon-gen"
 	rm -rf "${srcdir}/icon-gen"
 	mkdir "${srcdir}/icon-gen"
 	for icon in product_logo_48.png product_logo_24.png product_logo_256.png product_logo_16.png product_logo_64.png product_logo_128.png product_logo_32.png; do
@@ -78,7 +79,7 @@ function package() {
 	done
 	mkdir -p "${pkgdir}/usr/share/icons/hicolor"
 	cp -r \
-		"$(find ${srcdir}/icon-gen -type d -name 'hicolor' | head -n 1)"/* \
+		"${XDG_DATA_HOME}/icons/hicolor"/* \
 		"${pkgdir}/usr/share/icons/hicolor"
 	chmod 755 -R "${pkgdir}/usr/share/icons"
 	NSS_FILES="libnspr4.so.0 libplds4.so.0 libplc4.so.0 libssl3.so.1 \
