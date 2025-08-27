@@ -29,6 +29,7 @@ sha256sums=(
 
 function package() {
     depends+=(ca-certificates gtk3 nss xdg-utils dnsmasq portable libmfx libpulse alsa-lib xwaylandvideobridge)
+
     tar -xpvf "${srcdir}/data.tar.xz" --xattrs-include='*' --numeric-owner -C "${pkgdir}"
     rm -rf "${pkgdir}/usr/share/applications" "${pkgdir}/usr/share/menu" "${pkgdir}/usr/bin"
     install -Dm755 portable-config "${pkgdir}/usr/lib/portable/info/com.bytedance.feishu/config"
@@ -40,12 +41,10 @@ function package() {
     sed -i 's/bytedance-feishu/feishu/g' "${pkgdir}/usr/share/appdata/bytedance-feishu.appdata.xml"
     sed -i 's/bytedance-feishu/feishu/g' "${pkgdir}/opt/bytedance/feishu/bytedance-feishu"
 
-    #mv "${pkgdir}"/usr/share/appdata/{bytedance-,}feishu.appdata.xml
-    #mv "${pkgdir}"/usr/share/man/man1/{bytedance-feishu-${_pkgtyp},feishu}.1.gz
-    #mv "${pkgdir}"/usr/share/doc/{bytedance-feishu-${_pkgtyp},feishu}
-
-    # Also from original PKGBUILD
+    # From feishu-bin PKGBUILD
+    # Fix directory permissions
     find "${pkgdir}" -type d | xargs chmod 755
+
     mkdir -p "${pkgdir}/usr/share/icons"
     # From original .install
     export HOME="${srcdir}/icon-gen"
@@ -53,20 +52,28 @@ function package() {
     rm -rf "${srcdir}/icon-gen"
     mkdir "${srcdir}/icon-gen"
 
+    # From control/postinst {{
+    # Add icons to the system icons
     local icons="product_logo_48.png product_logo_24.png product_logo_256.png product_logo_16.png product_logo_64.png product_logo_128.png product_logo_32.png"
     for icon in $icons; do
         local size="$(echo ${icon} | sed 's/[^0-9]//g')"
         xdg-icon-resource install --size "${size}" --mode "user" "${pkgdir}/opt/bytedance/feishu/${icon}" "bytedance-feishu"
     done
+
+    # install_svg_icons
     mkdir -p "${pkgdir}/usr/share/icons/hicolor"
-    cp -r "${XDG_DATA_HOME}/icons/hicolor"/* "${pkgdir}/usr/share/icons/hicolor"
+    cp -r "${XDG_DATA_HOME}/icons/hicolor"/* -t "${pkgdir}/usr/share/icons/hicolor"
+    # Fix directory permissions
     chmod 755 -R "${pkgdir}/usr/share/icons"
 
+    # add_nss_symlinks
     local nss_files="libnspr4.so.0 libplds4.so.0 libplc4.so.0 libssl3.so.1 libnss3.so.1 libsmime3.so.1 libnssutil3.so.1"
     for f in $nss_files; do
         ln -sf "/usr/lib/${f%.*}" "${pkgdir}/opt/bytedance/feishu/${f}"
     done
+    # }}
 
+    # license
     install -d "${pkgdir}/usr/share/licenses/feishu-portable"
     echo 'https://www.feishu.cn/terms' >"${pkgdir}/usr/share/licenses/feishu-portable/terms.url"
 }
