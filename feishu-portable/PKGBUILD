@@ -1,3 +1,7 @@
+# Maintainer: Collide <three-dim-sky@foxmail.com>
+# Contributor: Kimiblock Moe <kimiblock@icloud.com>
+# https://github.com/TD-Sky/PKGBUILDs
+
 pkgname=feishu-portable
 pkgver=7.42.17
 _pkghash_x64=91e64286
