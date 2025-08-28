@@ -3,9 +3,9 @@
 # https://github.com/TD-Sky/PKGBUILDs
 
 pkgname=feishu-portable
-pkgver=7.42.17
-_pkghash_x64=91e64286
-_pkghash_arm64=49127814
+pkgver=7.46.12
+_pkghash_x64=72e0cee3
+_pkghash_arm64=ea20b00e
 pkgrel=1
 epoch=1
 pkgdesc="Linux client of Feishu (Lark) from Bytedance. Sandboxed by portable."
@@ -23,8 +23,8 @@ source=(
     com.bytedance.feishu.desktop
     feishu.sh
 )
-sha256sums_x86_64=('SKIP')
-sha256sums_aarch64=('SKIP')
+sha256sums_x86_64=('a9d696c78bd041626d117fb7c68ea81a9f36b1b96c59bd6307deb0f1d8dcef03')
+sha256sums_aarch64=('ce1eb9faff49591bfadf58500d29cac07d42f08df975d469abc91c9e145ee30a')
 sha256sums=(
     '9b1af79bfa82138525d98b5fc1c6be9fc177b866de13f19bc6580b8be1cca1bd'
     '6c96e320a3203642798d4e52262c01740e8adcd5f7bc613b5bfa2c13b9cb9606'
