@@ -1,0 +1,19 @@
+# Maintainer: Collide <three-dim-sky@foxmail.com>
+# https://github.com/TD-Sky/PKGBUILDs
+
+_pkgname='android-aarch64-openblas'
+pkgname="${_pkgname}-bin"
+pkgver='0.3.30'
+pkgrel=1
+pkgdesc="An optimized Basic Linear Algebra Subprograms (BLAS) library based on GotoBLAS2 1.13 BSD version."
+arch=('any')
+url='http://www.openblas.net'
+license=('BSD-3-Clause')
+options=('!debug' '!strip' '!lto' '!buildflags' 'staticlibs' '!emptydirs')
+source=("android-aarch64-openblas.tar.gz")
+install=${pkgname}.install
+sha256sums=('2f3932b2558db6c84246e4a23dc244bc9ae66eafc70477f54ba04a16d5c052d0')
+
+package() {
+    cp -r ${_pkgname}/* -t ${pkgdir}
+}

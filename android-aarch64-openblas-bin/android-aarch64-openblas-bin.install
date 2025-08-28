@@ -1,0 +1,17 @@
+post_install() {
+    local pkgver="${1%%-*}"
+
+    cd /opt/android-libs/aarch64/lib
+    ln -sr libopenblas_armv8p-r${pkgver}.a libopenblas.a
+    ln -sr libopenblas_armv8p-r${pkgver}.so libopenblas.so
+    ln -sr libopenblas_armv8p-r${pkgver}.so libopenblas.so.0
+}
+
+post_upgrade() {
+    pre_remove
+    post_install $1
+}
+
+pre_remove() {
+    rm /opt/android-libs/aarch64/lib/{libopenblas.a,libopenblas.so,libopenblas.so.0}
+}
