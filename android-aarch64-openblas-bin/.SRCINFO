@@ -1,0 +1,18 @@
+pkgbase = android-aarch64-openblas-bin
+	pkgdesc = An optimized Basic Linear Algebra Subprograms (BLAS) library based on GotoBLAS2 1.13 BSD version.
+	pkgver = 0.3.30
+	pkgrel = 1
+	url = http://www.openblas.net
+	install = android-aarch64-openblas-bin.install
+	arch = any
+	license = BSD-3-Clause
+	options = !debug
+	options = !strip
+	options = !lto
+	options = !buildflags
+	options = staticlibs
+	options = !emptydirs
+	source = android-aarch64-openblas.tar.gz
+	sha256sums = 2f3932b2558db6c84246e4a23dc244bc9ae66eafc70477f54ba04a16d5c052d0
+
+pkgname = android-aarch64-openblas-bin
