@@ -3,13 +3,12 @@
 *.jar
 *.exe
 *.msi
+*.deb
 *.zip
 *.tgz
 *.log
 *.log.*
 *.sig
-*.deb
-*.pkg.tar.zst
 
 pkg/
 src/

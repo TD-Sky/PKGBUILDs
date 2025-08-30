@@ -29,11 +29,38 @@ def main [package: path] {
     git clone $"ssh://aur@aur.archlinux.org/($pdir).git"
 
     let remote_package = ($package | path dirname -r $PUBLISH_HOME)
-    cp ($package | path join PKGBUILD) ($package | path join .SRCINFO) $remote_package
+
+    git ls-tree -r main --name-only
+    | split row (char newline)
+    | where {|s| $s | str starts-with $"($package)/" }
+    | each {|f| cp -r $f $remote_package }
+
+    gitignore | save -f ($remote_package | path join '.gitignore')
 
     cd $remote_package
     log pwd
-    git add PKGBUILD .SRCINFO
+    git add .
     git commit -m $version
+    git ls-tree -r master --name-only | tree -Ca --fromfile
     git push origin master
+}
+
+def gitignore []: nothing -> string {
+    [
+        '*.tar'
+        '*.tar.*'
+        '*.jar'
+        '*.exe'
+        '*.msi'
+        '*.deb'
+        '*.zip'
+        '*.tgz'
+        '*.log'
+        '*.log.*'
+        '*.sig'
+        ''
+        'pkg/'
+        'src/'
+    ]
+    | str join (char newline)
 }
