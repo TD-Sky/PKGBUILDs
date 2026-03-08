@@ -10,30 +10,25 @@ def 'log pwd' [] {
 
 # Publish package to AUR
 def main [package: path] {
-    cd $package
-    let pkgbuild = open -r PKGBUILD
-
+    let pkgbuild = open -r ($package | path join PKGBUILD)
     let pkgver = $pkgbuild | parse -r 'pkgver=(?P<ver>.+)' | get ver.0
     let pkgrel = $pkgbuild | parse -r 'pkgrel=(?P<rel>\d+)' | get rel.0 | into int
     let version = $"($pkgver)-($pkgrel)"
     log info ('Version: ' + $version)
 
-    mkdir $PUBLISH_HOME
-    cd $PUBLISH_HOME
-    log pwd
     let pdir = $package | path basename
-    if ($pdir | path exists) {
-        log warning $"There was already `($pdir)`, removing it..."
-        rm -rf $pdir
+    try {
+        rm -rfv ($PUBLISH_HOME | path join $pdir)
     }
-    git clone $"ssh://aur@aur.archlinux.org/($pdir).git"
+    mkdir -v $PUBLISH_HOME
+    git clone $"ssh://aur@aur.archlinux.org/($pdir).git" ($PUBLISH_HOME | path join $pdir)
 
-    let remote_package = ($package | path dirname -r $PUBLISH_HOME)
+    let remote_package = $package | path dirname -r $PUBLISH_HOME
 
     git ls-tree -r main --name-only
-    | split row (char newline)
+    | lines
     | where {|s| $s | str starts-with $"($package)/" }
-    | each {|f| cp -r $f $remote_package }
+    | each {|f| cp -rfv $f $remote_package }
 
     gitignore | save -f ($remote_package | path join '.gitignore')
 
