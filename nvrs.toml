@@ -11,3 +11,8 @@ prefix = "v"
 source = "github"
 github = "TD-Sky/dagtoc"
 prefix = "v"
+
+[jj-bond]
+source = "github"
+github = "TD-Sky/jj-bond"
+prefix = "v"
